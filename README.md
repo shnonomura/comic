@@ -10,6 +10,7 @@ aleatoriamente dentro dos disponíveis.
 Utilizou-se as bibliotecas Retrofit e Picasso.
 
 [Retrofit - Acessado em 29-04-2020](https://square.github.io/retrofit/)
+
 [Picasso - Acessado em 29-04-2020](https://github.com/square/picasso)
 
 Obs.: Não é a versão final e será melhorado.
