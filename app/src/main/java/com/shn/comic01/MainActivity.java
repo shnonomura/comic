@@ -2,14 +2,12 @@ package com.shn.comic01;
 
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
-
+import android.view.View;
+import android.widget.Button;
+import android.widget.ImageView;
 import com.shn.comic01.model.ComicModel;
 import com.shn.comic01.service.ComicService;
-
-import java.util.ArrayList;
-import java.util.List;
-
+import com.squareup.picasso.Picasso;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -18,51 +16,96 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MainActivity extends AppCompatActivity {
 
+    private ImageView mimageView;
+    private Button mbuttonComic;
     private Retrofit retrofit;
     private String urlImg;
+    private Integer numberComic;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        Integer availableComics = 0;
+        String imageDesired = "";
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        retrofit = new Retrofit.Builder()
-                .baseUrl("https://xkcd.com/")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
+        mimageView = findViewById(R.id.comicInicial);
+        mbuttonComic = findViewById(R.id.buscaComic);
 
-        urlImg = acaoBuscaRetrofit("");
-        Log.d( "Url Imagem: " , urlImg);
+        acaoBuscaRetrofit("");
+
+        mbuttonComic.setOnClickListener(new View.OnClickListener() {
+
+            private Integer novoId;
+
+            @Override
+            public void onClick(View v) {
+
+                novoId = createRandomNumber();
+                acaoBuscaRetrofit(novoId.toString());
+
+            }
+
+        }); // fim do mbuttonComic
 
     } // fim onCreate
 
 
-    public String acaoBuscaRetrofit( String num ) {
+    public void acaoBuscaRetrofit(String snum) {
 
-        String url="";
+        retrofit = new Retrofit.Builder()
+                .baseUrl("https://xkcd.com")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
 
         ComicService comicService = retrofit.create(ComicService.class);
-        Call<List<ComicModel>> call = comicService.buscarComic(num);
+        Call<ComicModel> call = comicService.buscarComic(snum);
 
-        call.enqueue(new Callback<List<ComicModel>>() {
+        call.enqueue(new Callback<ComicModel>() {
 
             @Override
-            public void onResponse(Call<List<ComicModel>> call, Response<List<ComicModel>> response) {
+            public void onResponse(Call<ComicModel> call, Response<ComicModel> response) {
+
                 if(response.isSuccessful()){
-                    ArrayList<ComicModel> comicData = (ArrayList) response.body();
-                    ComicModel url = (ComicModel) comicData.get(8);
+
+                    ComicModel comicData = response.body();
+                    numberComic = comicData.getNum();
+                    urlImg = comicData.getImg();
+                    System.out.println("dentro response.isSuccessful - *** numberComic: ***"+numberComic);
+                    System.out.println("dentro response.isSuccessful - *** url_img: ***"+urlImg);
+                    Picasso.get().load(urlImg).into(mimageView);
+
                 }
-            }
+
+            } // fim onResponse
 
             @Override
-            public void onFailure(Call<List<ComicModel>> call, Throwable t) {
+            public void onFailure(Call<ComicModel> call, Throwable t) {
 
-            }
-        });
+                System.out.println("FAILURE ***********");
 
-        return url;
+            } // fim onFailure
 
-    } // fim acaoPost
+        }); // fim enqueue
 
+     } // fim acaoBuscaRetrofit
+
+    public Integer createRandomNumber(){
+
+        Integer number;
+
+        number = (int)(Math.random() * numberComic);
+
+        return number;
+    } // fim createRandomNumber
+
+    public void showComic(){
+
+        Picasso.get().load(urlImg).into(mimageView);
+
+    }
 
 } // fim MainActivity
