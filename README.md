@@ -7,7 +7,11 @@ Ao iniciar o aplicativo é carregado a tarja de quadrinhos mais atual.
 É disponibilizado um botão que ao ser clicado ele apresenta uma nova tarja de quadrinhos
 aleatoriamente dentro dos disponíveis.
 
-<div align="center"><img src="https://github.com/shnonomura/comic/blob/master/Android%20-%20comic.JPG" alt="Aplicativo Android - quadrinhos cômicos utilizando Retrofit e Picasso"></div>
+<div align="center">
+<br>
+<img src="https://github.com/shnonomura/comic/blob/master/Android%20-%20comic.JPG" alt="Aplicativo Android - quadrinhos cômicos utilizando Retrofit e Picasso">
+<br>
+</div>
 
 Utilizou-se as bibliotecas Retrofit e Picasso.
 
