@@ -7,6 +7,8 @@ Ao iniciar o aplicativo é carregado a tarja de quadrinhos mais atual.
 É disponibilizado um botão que ao ser clicado ele apresenta uma nova tarja de quadrinhos
 aleatoriamente dentro dos disponíveis.
 
+<img src="pic_trulli.jpg" alt="Aplicativo Android - quadrinhos cômicos utilizando Retrofit e Picasso">
+
 Utilizou-se as bibliotecas Retrofit e Picasso.
 
 [Retrofit - Acessado em 29-04-2020](https://square.github.io/retrofit/)
